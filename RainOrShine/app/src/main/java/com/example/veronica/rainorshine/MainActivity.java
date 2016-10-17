@@ -15,5 +15,9 @@ public class MainActivity extends AppCompatActivity {
         Log.d("CAN YOU SEE THIS", "THIS IS AN EDIT");
         Log.d("ANOTHER", "TEST");
         Toast.makeText(getApplicationContext(), "hi", Toast.LENGTH_SHORT).show();
+
+        Toast.makeText(getApplicationContext(), "hi -brandon", Toast.LENGTH_SHORT).show();
+
+        //hello testing - brandon
     }
 }
