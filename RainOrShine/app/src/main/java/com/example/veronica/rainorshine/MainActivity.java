@@ -17,5 +17,7 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "hi", Toast.LENGTH_SHORT).show();
 
         //i deleted your shitty ass code brandon
+
+        // hi guys i love u
     }
 }
