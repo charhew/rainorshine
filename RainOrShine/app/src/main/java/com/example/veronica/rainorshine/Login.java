@@ -7,8 +7,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Login extends AppCompatActivity implements View.OnClickListener {
+
+    ContactDatabaseHelper helper = new ContactDatabaseHelper(this);
 
     Button loginButton;
     EditText emailEditText, passwordEditText;
@@ -32,7 +35,21 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch(v.getId()) {
             case R.id.loginButton:
+                String enteredEmail = emailEditText.getText().toString();
+                String enteredPassword = passwordEditText.getText().toString();
+
+                String userPassword = helper.searchPassword(enteredPassword);
+                if(userPassword.equals(enteredPassword)) {
+                    Intent i = new Intent(this, NewsFeed.class);
+                    i.putExtra("Email", enteredEmail);
+                    startActivity(i);
+                }
+                else {
+                    Toast.makeText(this, "Your password is incorrect", Toast.LENGTH_SHORT).show();
+                }
+
                 break;
+
             case R.id.registerLink:
                 startActivity(new Intent(this, Register.class));
                 break;
