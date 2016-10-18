@@ -15,4 +15,9 @@ public class NewsFeed extends AppCompatActivity {
 
         Toast.makeText(this, "Welcome " + email, Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void onBackPressed() {
+        return;
+    }
 }

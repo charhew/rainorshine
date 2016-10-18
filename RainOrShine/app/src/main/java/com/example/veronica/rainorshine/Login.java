@@ -17,6 +17,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     EditText emailEditText, passwordEditText;
     TextView registerLink;
 
+    boolean alreadyLoggedIn = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +31,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
         loginButton.setOnClickListener(this);
         registerLink.setOnClickListener(this);
+
+        if (alreadyLoggedIn) {
+            startActivity(new Intent(this, NewsFeed.class));
+        }
     }
 
     @Override
@@ -38,14 +44,16 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 String enteredEmail = emailEditText.getText().toString();
                 String enteredPassword = passwordEditText.getText().toString();
 
-                String userPassword = helper.searchPassword(enteredPassword);
+                String userPassword = helper.searchPassword(enteredEmail);
+
                 if(userPassword.equals(enteredPassword)) {
+                    alreadyLoggedIn = true;
                     Intent i = new Intent(this, NewsFeed.class);
                     i.putExtra("Email", enteredEmail);
                     startActivity(i);
                 }
                 else {
-                    Toast.makeText(this, "Your password is incorrect", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Your credentials are incorrect", Toast.LENGTH_SHORT).show();
                 }
 
                 break;

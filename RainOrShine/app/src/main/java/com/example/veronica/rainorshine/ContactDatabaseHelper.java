@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 /**
  * Created by Veronica on 2016-10-17.
@@ -54,7 +55,7 @@ public class ContactDatabaseHelper extends SQLiteOpenHelper {
 
     public String searchPassword(String email) {
         db = this.getReadableDatabase();
-        String query = "select name, password from " + TABLE_NAME;
+        String query = "select email, password from " + TABLE_NAME;
         Cursor cursor = db.rawQuery(query, null);
         String tempEmail, tempPassword;
         tempPassword = "not found";
@@ -62,7 +63,6 @@ public class ContactDatabaseHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 tempEmail = cursor.getString(0);
-                tempPassword = cursor.getString(1);
 
                 if (tempEmail.equals(email)) {
                     tempPassword = cursor.getString(1);
