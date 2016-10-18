@@ -9,41 +9,46 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
     tools:context="com.example.veronica.rainorshine.Login">
-    
-    <TextView
-        android:layout_width="wrap_content"
-        android:text="Email"
-        android:layout_height="wrap_content" />
-    
-    <EditText
+
+    <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/emailEditText"
-        android:layout_marginBottom="10dp"/>
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp">
+        <EditText android:id="@+id/emailEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:hint="Email" />
+    </android.support.design.widget.TextInputLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:text="Password"
-        android:layout_height="wrap_content" />
-
-    <EditText
+    <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:id="@+id/passwordEditText"
-        android:layout_marginBottom="10dp"/>
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp">
+        <EditText android:id="@+id/passwordEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:hint="Password"/>
+    </android.support.design.widget.TextInputLayout>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/loginButton"
+        android:layout_marginTop="20dp"
         android:text="Login"
+        android:background="@drawable/round_button"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_marginBottom="10dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_gravity="center_horizontal"
         android:textStyle="bold"
+        android:layout_marginTop="10dp"
         android:text="Sign Up"
         android:id="@+id/registerLink"
         android:layout_height="wrap_content" />
