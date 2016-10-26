@@ -16,7 +16,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Register" />
-        <activity android:name=".NewsFeed"></activity>
+        <activity android:name=".FashionGrid"></activity>
     </application>
 
 </manifest>

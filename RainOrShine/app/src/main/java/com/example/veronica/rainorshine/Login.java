@@ -19,10 +19,16 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
     boolean alreadyLoggedIn = false;
 
+    String name;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_login);
+
+        Intent i = getIntent();
+        name = i.getStringExtra("name");
 
         loginButton = (Button) findViewById(R.id.loginButton);
         emailEditText = (EditText) findViewById(R.id.emailEditText);
@@ -33,7 +39,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         registerLink.setOnClickListener(this);
 
         if (alreadyLoggedIn) {
-            startActivity(new Intent(this, NewsFeed.class));
+            startActivity(new Intent(this, FashionGrid.class));
         }
     }
 
@@ -48,8 +54,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
                 if(userPassword.equals(enteredPassword)) {
                     alreadyLoggedIn = true;
-                    Intent i = new Intent(this, NewsFeed.class);
-                    i.putExtra("Email", enteredEmail);
+                    Intent i = new Intent(this, FashionGrid.class);
+                    i.putExtra("name", name);
                     startActivity(i);
                 }
                 else {

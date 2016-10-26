@@ -42,7 +42,9 @@ public class Register extends AppCompatActivity {
                 c.setPassword(pass1);
 
                 helper.insertContact(c);
-                startActivity(new Intent(this, Login.class));
+                Intent i = new Intent(this, Login.class);
+                i.putExtra("name", name);
+                startActivity(i);
             }
         }
     }
