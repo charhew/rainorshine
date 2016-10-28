@@ -11,6 +11,8 @@
     android:orientation="horizontal"
     tools:context="com.example.veronica.rainorshine.Login">
 
+
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"

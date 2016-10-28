@@ -6,15 +6,16 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class FashionGrid extends AppCompatActivity {
+public class old_FashionGrid extends AppCompatActivity {
 
     TextView helloName;
     String firstName;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_fashion_grid);
+        setContentView(R.layout.old_activity_fashion_grid);
 
         Intent i = getIntent();
         firstName = i.getStringExtra("name");

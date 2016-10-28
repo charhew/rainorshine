@@ -4,7 +4,7 @@
     android:id="@+id/activity_fashion_grid"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.veronica.rainorshine.FashionGrid">
+    tools:context="com.example.veronica.rainorshine.old_FashionGrid">
 
     <ImageView
         android:layout_width="match_parent"

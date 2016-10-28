@@ -39,9 +39,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         registerLink.setOnClickListener(this);
 
         if (alreadyLoggedIn) {
-            startActivity(new Intent(this, FashionGrid.class));
+            startActivity(new Intent(this, old_FashionGrid.class));
         }
     }
+
 
     @Override
     public void onClick(View v) {
@@ -54,7 +55,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
                 if(userPassword.equals(enteredPassword)) {
                     alreadyLoggedIn = true;
-                    Intent i = new Intent(this, FashionGrid.class);
+                    Intent i = new Intent(this, MainActivity.class);
                     i.putExtra("name", name);
                     startActivity(i);
                 }
@@ -69,4 +70,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 break;
         }
     }
+
+
 }
