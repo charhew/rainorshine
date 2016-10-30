@@ -35,10 +35,11 @@
                 />
             <TextView
                 android:layout_width="wrap_content"
+                android:id="@+id/tempTextView"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorAccent"
                 android:textSize="24dp"
-                android:text=" | 5°"/>
+                />
         </LinearLayout>
 
         <TextView
@@ -62,6 +63,7 @@
             android:paddingRight="20dp"
             android:paddingLeft="20dp"
             android:textSize="16dp"
+            android:id="@+id/displayTextView"
             android:text="Your fashion grid currently displays outfits suitable for 5°C, Rain."/>
 
         <TextView
