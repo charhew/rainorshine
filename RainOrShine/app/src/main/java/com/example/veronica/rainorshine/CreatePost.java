@@ -3,12 +3,10 @@ package com.example.veronica.rainorshine;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class CreatePost extends AppCompatActivity {
 
@@ -29,7 +27,7 @@ public class CreatePost extends AppCompatActivity {
         CameraInput input = db.getCameraInput();
         imageArry.add(input);
 
-        imageAdapter = new ImageAdapter(this, R.layout.screen_list,
+        imageAdapter = new ImageAdapter(this, R.layout.grid_item,
                 imageArry);
         dataList.setAdapter(imageAdapter);
     }

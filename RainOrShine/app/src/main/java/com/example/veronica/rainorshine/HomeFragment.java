@@ -1,22 +1,16 @@
 package com.example.veronica.rainorshine;
 
-import android.app.Activity;
 import android.app.Fragment;
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.ListView;
+import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.veronica.rainorshine.data.Channel;
-import com.example.veronica.rainorshine.data.Condition;
 import com.example.veronica.rainorshine.data.Item;
 import com.example.veronica.rainorshine.service.WeatherServiceCallback;
 import com.example.veronica.rainorshine.service.YahooWeatherService;
@@ -35,7 +29,7 @@ public class HomeFragment extends Fragment implements WeatherServiceCallback {
     TextView helloName;
     String firstName;
 
-    ListView dataList;
+    GridView dataGrid;
     ArrayList<CameraInput> imageArry = new ArrayList<CameraInput>();
     ImageAdapter imageAdapter;
 
@@ -61,7 +55,7 @@ public class HomeFragment extends Fragment implements WeatherServiceCallback {
         helloName = (TextView) getActivity().findViewById(R.id.helloTextView);
         helloName.setText("Hello,\n" + firstName + ".");
 
-        dataList = (ListView) getActivity().findViewById(R.id.list);
+        dataGrid = (GridView) getActivity().findViewById(R.id.gridview);
 
         db = new ImageDatabaseHelper(getActivity());
 
@@ -70,9 +64,9 @@ public class HomeFragment extends Fragment implements WeatherServiceCallback {
             imageArry.add(ci);
         }
 
-        imageAdapter = new ImageAdapter(getActivity(), R.layout.screen_list,
+        imageAdapter = new ImageAdapter(getActivity(), R.layout.grid_item,
                 imageArry);
-        dataList.setAdapter(imageAdapter);
+        dataGrid.setAdapter(imageAdapter);
     }
 
     @Override
