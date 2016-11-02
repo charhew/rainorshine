@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +20,9 @@ import com.example.veronica.rainorshine.data.Condition;
 import com.example.veronica.rainorshine.data.Item;
 import com.example.veronica.rainorshine.service.WeatherServiceCallback;
 import com.example.veronica.rainorshine.service.YahooWeatherService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Charlene on 2016-10-27.
@@ -30,6 +34,12 @@ public class HomeFragment extends Fragment implements WeatherServiceCallback {
 
     TextView helloName;
     String firstName;
+
+    ListView dataList;
+    ArrayList<CameraInput> imageArry = new ArrayList<CameraInput>();
+    ImageAdapter imageAdapter;
+
+    ImageDatabaseHelper db;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_home, container, false);
@@ -50,15 +60,26 @@ public class HomeFragment extends Fragment implements WeatherServiceCallback {
 
         helloName = (TextView) getActivity().findViewById(R.id.helloTextView);
         helloName.setText("Hello,\n" + firstName + ".");
+
+        dataList = (ListView) getActivity().findViewById(R.id.list);
+
+        db = new ImageDatabaseHelper(getActivity());
+
+        List<CameraInput> inputs = db.getAllCameraInputs();
+        for (CameraInput ci : inputs) {
+            imageArry.add(ci);
+        }
+
+        imageAdapter = new ImageAdapter(getActivity(), R.layout.screen_list,
+                imageArry);
+        dataList.setAdapter(imageAdapter);
     }
-
-
 
     @Override
     public void serviceSuccess(Channel channel) {
         Item item = channel.getItem();
 
-        weatherDetail.setText(" "+ ((item.getCondition().getTemperature() - 32) * 5/9)+"°C");
+        weatherDetail.setText(" | "+ ((item.getCondition().getTemperature() - 32) * 5/9)+"°C");
         displayText.setText("Your fashion grid currently displays outfits suitable for " + ((item.getCondition().getTemperature() - 32) * 5/9)+" °C.");
 
        // Toast.makeText(getActivity(), item.getCondition().getTemperature(), Toast.LENGTH_SHORT).show();

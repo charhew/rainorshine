@@ -66,32 +66,19 @@
             android:id="@+id/displayTextView"
             android:text="Your fashion grid currently displays outfits suitable for 5°C, Rain."/>
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <!--<TextView-->
+            <!--android:id="@+id/textView"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_below="@+id/weatherBanner"-->
+            <!--android:text=""-->
+            <!--android:textSize="20dp" />-->
+        <ListView
+            android:id="@+id/list"
             android:layout_below="@+id/weatherBanner"
-            android:text="START. [[[Home fashion grid]]] asdf asdf asdf asdf asdf
-        asdf asdf asdf asdf asdf asdf asd fas dfa sdf asdf sd sad sdaf ds a
-        asdfa asd fas df asd asd fa sdf asd fas df asdf asf asdf as dfa sdf
-        asdf asdf asdf asdf asdf asdf asd fas dfa sdf asdf sd sad sdaf ds a
-        asdfa asd fas df asd asd fa sdf asd fas df asdf asf asdf as dfa sdf
-        asdf asdf asdf asdf asdf asdf asd fas dfa sdf asdf sd sad sdaf ds a
-        asdfa asd fas df asd asd fa sdf asd fas df asdf asf asdf as dfa sdf
-        asdf asdf asdf asdf asdf asdf asd fas dfa sdf asdf sd sad sdaf ds a
-        asdfa asd fas df asd asd fa sdf asd fas df asdf asf asdf as dfa sdf
-        asdf asdf asdf asdf asdf asdf asd fas dfa sdf asdf sd sad sdaf ds a
-        asdf asdf asdf asdf asdf asdf asd fas dfa sdf asdf sd sad sdaf ds a
-        asdfa asd fas df asd asd fa sdf asd fas df asdf asf asdf as dfa sdf
-        asdf asdf asdf asdf asdf asdf asd fas dfa sdf asdf sd sad sdaf ds a
-        asdfa asd fas df asd asd fa sdf asd fas df asdf asf asdf as dfa sdf
-        asdf asdf asdf asdf asdf asdf asd fas dfa sdf asdf sd sad sdaf ds a
-        asdf asdf asdf asdf asdf asdf asd fas dfa sdf asdf sd sad sdaf ds a
-        asdfa asd fas df asd asd fa sdf asd fas df asdf asf asdf as dfa sdf
-        asdf asdf asdf asdf asdf asdf asd fas dfa sdf asdf sd sad sdaf ds a
-        asdfa asd fas df asd asd fa sdf asd fas df asdf asf asdf as dfa sdf
-        asdf asdf asdf asdf asdf asdf asd fas dfa sdf asdf sd sad sdaf ds a
-        asdfa asd fas df asd asd fa sdf asd fas df asdf asf asds dfa sdf END."
-            android:textSize="20dp" />
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:cacheColorHint="#00000000" >
+        </ListView>
     </RelativeLayout>
 </ScrollView>
