@@ -21,7 +21,7 @@ public class MainActivity extends Activity implements Communicate {
 
             //arg 1: where we want to add the fragment
             //arg 2: the fragment
-            //arg 3: String to identify the fragment
+            //arg 3: String to identify the fragmenth
             transaction.add(R.id.MyLayout, homeFrag, "Home Fragment");
             transaction.add(R.id.MyLayout, navFrag, "Nav Bar Fragment");
             transaction.commit();

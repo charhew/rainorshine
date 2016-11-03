@@ -1,6 +1,9 @@
 package com.example.veronica.rainorshine;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -11,24 +14,18 @@ import android.widget.Toast;
 
 public class Login extends AppCompatActivity implements View.OnClickListener {
 
-    ContactDatabaseHelper helper = new ContactDatabaseHelper(this);
-
     Button loginButton;
     EditText emailEditText, passwordEditText;
     TextView registerLink;
 
-    boolean alreadyLoggedIn = false;
-
     String name;
+    public static final String DEFAULT = "not available";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_login);
-
-        Intent i = getIntent();
-        name = i.getStringExtra("name");
 
         loginButton = (Button) findViewById(R.id.loginButton);
         emailEditText = (EditText) findViewById(R.id.emailEditText);
@@ -38,8 +35,14 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         loginButton.setOnClickListener(this);
         registerLink.setOnClickListener(this);
 
-        if (alreadyLoggedIn) {
-            startActivity(new Intent(this, old_FashionGrid.class));
+        // move to home if already logged in
+        SharedPreferences sharedPrefs = getSharedPreferences("UserCredentials", Context.MODE_PRIVATE);
+        String email = sharedPrefs.getString("email", DEFAULT);
+        String password = sharedPrefs.getString("password", DEFAULT);
+
+        if (!(email.equals(DEFAULT)) || !(password.equals(DEFAULT))) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
         }
     }
 
@@ -48,23 +51,21 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch(v.getId()) {
             case R.id.loginButton:
-                String enteredEmail = emailEditText.getText().toString();
-                String enteredPassword = passwordEditText.getText().toString();
+                SharedPreferences sharedPrefs = getSharedPreferences("UserCredentials", Context.MODE_PRIVATE);
+                String email = sharedPrefs.getString("email", DEFAULT);
+                String password = sharedPrefs.getString("password", DEFAULT);
 
-                String userPassword = helper.searchPassword(enteredEmail);
+                String curEmail = emailEditText.getText().toString();
+                String curPassword = passwordEditText.getText().toString();
 
-                if(userPassword.equals(enteredPassword)) {
-                    alreadyLoggedIn = true;
-                    Intent i = new Intent(this, MainActivity.class);
-                    i.putExtra("name", name);
-                    startActivity(i);
+                if (email.equals(curEmail) && password.equals(curPassword)) {
+                    startActivity(new Intent(this, MainActivity.class));
                 }
-                else {
-                    Toast.makeText(this, "Your credentials are incorrect", Toast.LENGTH_SHORT).show();
+                else
+                {
+                    Toast.makeText(this, "User credentials incorrect", Toast.LENGTH_LONG).show();
                 }
-
                 break;
-
             case R.id.registerLink:
                 startActivity(new Intent(this, Register.class));
                 break;

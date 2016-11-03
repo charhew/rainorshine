@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.veronica.rainorshine">
-    
+
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -19,6 +19,8 @@
         </activity>
         <activity android:name=".Register" />
         <activity android:name=".MainActivity" />
+        <activity android:name=".CreatePost" />
+        <activity android:name=".PostDetails"></activity>
     </application>
 
 </manifest>

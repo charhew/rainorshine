@@ -1,24 +1,26 @@
 package com.example.veronica.rainorshine;
 
-import android.app.Activity;
 import android.app.Fragment;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.veronica.rainorshine.data.Channel;
-import com.example.veronica.rainorshine.data.Condition;
 import com.example.veronica.rainorshine.data.Item;
 import com.example.veronica.rainorshine.service.WeatherServiceCallback;
 import com.example.veronica.rainorshine.service.YahooWeatherService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Charlene on 2016-10-27.
@@ -32,6 +34,13 @@ public class HomeFragment extends Fragment implements WeatherServiceCallback {
     TextView helloName;
     String firstName;
 
+    GridView dataGrid;
+    public ArrayList<CameraInput> cameraInputArray = new ArrayList<CameraInput>();
+    ImageAdapter imageAdapter;
+
+    ImageDatabaseHelper db;
+    public static final String DEFAULT = "not available";
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_home, container, false);
 
@@ -41,8 +50,9 @@ public class HomeFragment extends Fragment implements WeatherServiceCallback {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         Intent i = getActivity().getIntent();
-        firstName = i.getStringExtra("name");
-        Toast.makeText(getActivity(), firstName, Toast.LENGTH_SHORT).show();
+
+        SharedPreferences sharedPrefs = getActivity().getSharedPreferences("UserCredentials", Context.MODE_PRIVATE);
+        firstName = sharedPrefs.getString("name", DEFAULT);
 
         displayText = (TextView) getActivity().findViewById(R.id.displayTextView);
         weatherDetail = (TextView) getActivity().findViewById(R.id.tempTextView);
@@ -52,69 +62,96 @@ public class HomeFragment extends Fragment implements WeatherServiceCallback {
 
         helloName = (TextView) getActivity().findViewById(R.id.helloTextView);
         helloName.setText("Hello,\n" + firstName + ".");
+
+        dataGrid = (GridView) getActivity().findViewById(R.id.gridview);
+
+        db = new ImageDatabaseHelper(getActivity());
+
+        List<CameraInput> inputs = db.getAllCameraInputs();
+        for (CameraInput ci : inputs) {
+            cameraInputArray.add(ci);
+        }
+
+        imageAdapter = new ImageAdapter(getActivity(), R.layout.grid_item, cameraInputArray);
+        dataGrid.setAdapter(imageAdapter);
+
+        dataGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i = new Intent(getActivity(), PostDetails.class);
+                i.putExtra("POSITION", position);
+                startActivity(i);
+            }
+        });
     }
-
-
 
     @Override
     public void serviceSuccess(Channel channel) {
         Item item = channel.getItem();
 
+        Toast.makeText(getActivity(), item.getCondition().getDescription(), Toast.LENGTH_SHORT).show();
+
         weatherDetail.setText(" "+ ((item.getCondition().getTemperature() - 32) * 5/9)+"°C");
         displayText.setText("Your fashion grid currently displays outfits suitable for " + ((item.getCondition().getTemperature() - 32) * 5/9)+" °C, " + item.getCondition().getDescription() + ".");
 
         //rain
-        if (item.getCondition().getCode() == 1 ||
-                item.getCondition().getCode() == 10 ||
-                item.getCondition().getCode() == 11 ||
-                item.getCondition().getCode() == 12 ||
-                item.getCondition().getCode() == 17 ||
-                item.getCondition().getCode() == 18 ||
-                item.getCondition().getCode() == 35 ||
-                item.getCondition().getCode() == 40 ||
-                item.getCondition().getCode() == 17 ||
-                item.getCondition().getCode() == 9 ) {
-
+        if (item.getCondition().getDescription().equals("Severe Thunderstorms") ||
+                item.getCondition().getDescription().equals("Scattered Showers") ||
+                item.getCondition().getDescription().equals("Thunderstorms") ||
+                item.getCondition().getDescription().equals("Mixed Rain And Snow") ||
+                item.getCondition().getDescription().equals("Mixed Rain And Sleet") ||
+                item.getCondition().getDescription().equals("Drizzle") ||
+                item.getCondition().getDescription().equals("Freezing Rain") ||
+                item.getCondition().getDescription().equals("Showers") ||
+                item.getCondition().getDescription().equals("Hail") ||
+                item.getCondition().getDescription().equals("Rain") ||
+                item.getCondition().getDescription().equals("Mixed Rain And Hail") ||
+                item.getCondition().getDescription().equals("Thundershowers")){
+            banner = (ImageView) getActivity().findViewById(R.id.weatherBanner);
             banner.setImageResource(R.drawable.rain);
-
         }
 
+        //
+
         //sunny
-        if (item.getCondition().getCode() == 32 ||
-                item.getCondition().getCode() == 34 ||
-                item.getCondition().getCode() == 36 ||
-                item.getCondition().getCode() == 21 ) {
+        if ( item.getCondition().getDescription().equals("Sunny") ||
+                item.getCondition().getDescription().equals("Fair (Day)") ||
+                item.getCondition().getDescription().equals("Hot") ||
+                item.getCondition().getDescription().equals("Haze") ) {
 
             banner.setImageResource(R.drawable.sunny);
 
         }
 
         //snow
-        if (item.getCondition().getCode() == 5 ||
-                item.getCondition().getCode() == 6 ||
-                item.getCondition().getCode() == 7 ||
-                item.getCondition().getCode() == 8 ||
-                item.getCondition().getCode() == 10 ||
-                item.getCondition().getCode() == 13 ||
-                item.getCondition().getCode() == 14 ||
-                item.getCondition().getCode() == 16 ||
-                item.getCondition().getCode() == 18 ||
-                item.getCondition().getCode() == 41 ||
-                item.getCondition().getCode() == 42 ||
-                item.getCondition().getCode() == 46) {
+        if (item.getCondition().getDescription().equals("Mixed Rain And Snow") ||
+                item.getCondition().getDescription().equals("Mixed Rain And Sleet") ||
+                item.getCondition().getDescription().equals("Mixed Snow And Sleet") ||
+                item.getCondition().getDescription().equals("Freezing Drizzle") ||
+                item.getCondition().getDescription().equals("Freezing Rain") ||
+                item.getCondition().getDescription().equals("Snow Flurries") ||
+                item.getCondition().getDescription().equals("Light Snow Showers") ||
+                item.getCondition().getDescription().equals("Snow") ||
+                item.getCondition().getDescription().equals("Sleet") ||
+                item.getCondition().getDescription().equals("Heavy Snow") ||
+                item.getCondition().getDescription().equals("Scattered Snow Showers") ||
+                item.getCondition().getDescription().equals("Snow Showers")) {
 
             banner.setImageResource(R.drawable.snow);
 
         }
 
         //cloudy
-        if (item.getCondition().getCode() == 20 ||
-                item.getCondition().getCode() == 26 ||
-                item.getCondition().getCode() == 27 ||
-                item.getCondition().getCode() == 28 ||
-                item.getCondition().getCode() == 29 ||
-                item.getCondition().getCode() == 30 ||
-                item.getCondition().getCode() == 44 ) {
+        if (item.getCondition().getDescription().equals("Foggy") ||
+                item.getCondition().getDescription().equals("Cloudy") ||
+                item.getCondition().getDescription().equals("Mostly Cloudy (Night)") ||
+                item.getCondition().getDescription().equals("Mostly Cloudy (Day)") ||
+                item.getCondition().getDescription().equals("Mostly Cloudy") ||
+                item.getCondition().getDescription().equals("Partly Cloudy (Day)") ||
+                item.getCondition().getDescription().equals("Partly Cloudy (Night)") ||
+                item.getCondition().getDescription().equals("Partly Cloudy") ||
+                item.getCondition().getDescription().equals("Cloud") ) {
 
             banner.setImageResource(R.drawable.cloudy);
 

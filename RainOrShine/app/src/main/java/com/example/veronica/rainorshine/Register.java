@@ -1,6 +1,8 @@
 package com.example.veronica.rainorshine;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,9 +12,11 @@ import android.widget.Toast;
 
 public class Register extends AppCompatActivity {
 
-    ContactDatabaseHelper helper = new ContactDatabaseHelper(this);
+//    ContactDatabaseHelper helper = new ContactDatabaseHelper(this);
     Button registerButton;
     EditText nameEditText, emailEditText, passwordEditText, password2EditText;
+
+    public static final String DEFAULT = "not available";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,23 +32,21 @@ public class Register extends AppCompatActivity {
 
     public void onSignUpClick(View v) {
         if (v.getId() == R.id.registerButton) {
-            String name = nameEditText.getText().toString();
-            String email = emailEditText.getText().toString();
             String pass1 = passwordEditText.getText().toString();
             String pass2 = password2EditText.getText().toString();
 
             if (!pass1.equals(pass2)) {
                 Toast.makeText(this, "Passwords don't match!", Toast.LENGTH_SHORT).show();
             } else {
-                Contact c = new Contact();
-                c.setName(name);
-                c.setEmail(email);
-                c.setPassword(pass1);
-
-                helper.insertContact(c);
-                Intent i = new Intent(this, Login.class);
-                i.putExtra("name", name);
-                startActivity(i);
+                SharedPreferences sharedPrefs = getSharedPreferences("UserCredentials", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPrefs.edit();
+                editor.putString("name", nameEditText.getText().toString());
+                editor.putString("email", emailEditText.getText().toString());
+                editor.putString("password", passwordEditText.getText().toString());
+                Toast.makeText(this, "User Credentials saved to Preferences", Toast.LENGTH_LONG).show();
+                editor.commit();
+                Intent intent = new Intent(this, Login.class);
+                startActivity(intent);
             }
         }
     }
