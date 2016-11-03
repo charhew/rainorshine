@@ -92,8 +92,8 @@ public class HomeFragment extends Fragment implements WeatherServiceCallback {
 
         Toast.makeText(getActivity(), item.getCondition().getDescription(), Toast.LENGTH_SHORT).show();
 
-        weatherDetail.setText(" "+ ((item.getCondition().getTemperature() - 32) * 5/9)+"°C");
-        displayText.setText("Your fashion grid currently displays outfits suitable for " + ((item.getCondition().getTemperature() - 32) * 5/9)+" °C, " + item.getCondition().getDescription() + ".");
+        weatherDetail.setText(" | "+ ((item.getCondition().getTemperature() - 32) * 5/9)+"°C");
+        displayText.setText("Your fashion grid currently displays outfits suitable for " + ((item.getCondition().getTemperature() - 32) * 5/9)+"°C, " + item.getCondition().getDescription() + ".");
 
         //rain
         if (item.getCondition().getDescription().equals("Severe Thunderstorms") ||
