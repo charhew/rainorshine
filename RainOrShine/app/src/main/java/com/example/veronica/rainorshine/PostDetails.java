@@ -8,6 +8,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
+//this class is used when you tap a thumbnail on the home screen.
 public class PostDetails extends AppCompatActivity {
     ImageDatabaseHelper db;
 
