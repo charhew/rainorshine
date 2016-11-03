@@ -21,7 +21,7 @@ import java.util.ArrayList;
 public class ImageAdapter extends ArrayAdapter<CameraInput> {
     Context context;
     int layoutResourceId;
-    ArrayList<CameraInput> data = new ArrayList<CameraInput>();
+    private ArrayList<CameraInput> data = new ArrayList<CameraInput>();
 
     public ImageAdapter(Context context, int layoutResourceId, ArrayList<CameraInput> data) {
         super(context, layoutResourceId, data);

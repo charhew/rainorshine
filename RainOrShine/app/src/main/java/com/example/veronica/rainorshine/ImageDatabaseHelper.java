@@ -30,8 +30,6 @@ public class ImageDatabaseHelper extends SQLiteOpenHelper {
     private static final String KEY_IMAGE = "image";
     private static final String KEY_CAPTION = "caption";
 
-    long id;
-
     public ImageDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -41,7 +39,6 @@ public class ImageDatabaseHelper extends SQLiteOpenHelper {
         String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_NAME + "("
                 + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_IMAGE + " BLOB,"
                 + KEY_CAPTION + " TEXT" + ")";
-
 
         db.execSQL(CREATE_CONTACTS_TABLE);
     }
@@ -64,7 +61,6 @@ public class ImageDatabaseHelper extends SQLiteOpenHelper {
 
         // Inserting Row
         db.insert(TABLE_NAME, null, values);
-        id = db.insert(TABLE_NAME, null, values);
         db.close(); // Closing database connection
     }
 
