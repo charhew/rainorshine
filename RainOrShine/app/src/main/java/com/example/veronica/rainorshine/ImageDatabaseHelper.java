@@ -64,6 +64,12 @@ public class ImageDatabaseHelper extends SQLiteOpenHelper {
         db.close(); // Closing database connection
     }
 
+    public boolean deleteCameraInput(int id)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_NAME, KEY_ID + "=" + id, null) > 0;
+    }
+
     // Getting single image
     CameraInput getCameraInput() {
         SQLiteDatabase db = this.getReadableDatabase();

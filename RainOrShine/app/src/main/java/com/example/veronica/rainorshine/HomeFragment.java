@@ -30,6 +30,7 @@ public class HomeFragment extends Fragment implements WeatherServiceCallback {
     TextView weatherDetail;
     TextView displayText;
     ImageView banner;
+    ImageView icon;
 
     TextView helloName;
     String firstName;
@@ -57,6 +58,7 @@ public class HomeFragment extends Fragment implements WeatherServiceCallback {
         displayText = (TextView) getActivity().findViewById(R.id.displayTextView);
         weatherDetail = (TextView) getActivity().findViewById(R.id.tempTextView);
         banner = (ImageView) getActivity().findViewById(R.id.weatherBanner);
+        icon = (ImageView) getActivity().findViewById(R.id.icon);
         service = new YahooWeatherService(this);
         service.refreshWeather("Vancouver, BC");
 
@@ -108,19 +110,21 @@ public class HomeFragment extends Fragment implements WeatherServiceCallback {
                 item.getCondition().getDescription().equals("Rain") ||
                 item.getCondition().getDescription().equals("Mixed Rain And Hail") ||
                 item.getCondition().getDescription().equals("Thundershowers")){
-            banner = (ImageView) getActivity().findViewById(R.id.weatherBanner);
-            banner.setImageResource(R.drawable.rain);
-        }
 
-        //
+            banner.setImageResource(R.drawable.rain);
+            icon.setImageResource(R.drawable.rain_icon);
+        }
 
         //sunny
         if ( item.getCondition().getDescription().equals("Sunny") ||
                 item.getCondition().getDescription().equals("Fair (Day)") ||
                 item.getCondition().getDescription().equals("Hot") ||
-                item.getCondition().getDescription().equals("Haze") ) {
+                item.getCondition().getDescription().equals("Haze") ||
+                item.getCondition().getDescription().equals("Mostly Clear") ||
+                item.getCondition().getDescription().equals("Clear")) {
 
             banner.setImageResource(R.drawable.sunny);
+            icon.setImageResource(R.drawable.sunny_icon);
 
         }
 
@@ -139,6 +143,7 @@ public class HomeFragment extends Fragment implements WeatherServiceCallback {
                 item.getCondition().getDescription().equals("Snow Showers")) {
 
             banner.setImageResource(R.drawable.snow);
+            icon.setImageResource(R.drawable.snow_icon);
 
         }
 
@@ -154,6 +159,7 @@ public class HomeFragment extends Fragment implements WeatherServiceCallback {
                 item.getCondition().getDescription().equals("Cloud") ) {
 
             banner.setImageResource(R.drawable.cloudy);
+            icon.setImageResource(R.drawable.cloudy_icon);
 
         }
 

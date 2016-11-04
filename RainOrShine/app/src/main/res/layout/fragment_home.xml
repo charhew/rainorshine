@@ -26,6 +26,7 @@
             android:layout_height="24dp"
             android:scaleType="fitStart"
             android:adjustViewBounds="true"
+            android:id="@+id/icon"
             android:src="@drawable/rain_icon"
             />
         <TextView

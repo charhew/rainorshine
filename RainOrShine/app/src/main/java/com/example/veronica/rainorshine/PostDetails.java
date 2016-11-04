@@ -3,7 +3,9 @@ package com.example.veronica.rainorshine;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,12 +21,15 @@ public class PostDetails extends AppCompatActivity {
 
     ListView cameraInput;
 
+    int arrayCounter = 5;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_details);
         Intent i = getIntent();
         curArrayPosition = i.getIntExtra("POSITION", 0);
+
 
         db = new ImageDatabaseHelper(this);
 
@@ -38,5 +43,15 @@ public class PostDetails extends AppCompatActivity {
         curInputArray.add(cameraInputArray.get(curArrayPosition));
         imageAdapter = new ImageAdapter(this, R.layout.grid_item, curInputArray);
         cameraInput.setAdapter(imageAdapter);
+    }
+
+    public void delete(View v) {
+        Toast.makeText(this, "Delete Photo Requested", Toast.LENGTH_LONG).show();
+
+
+        //CODE BELOW IS WHAT CALLS THE DELETE METHOD AND DELETES THE IMAGE IN THE POSITION CALLED
+        db.deleteCameraInput(arrayCounter);
+
+        startActivity(new Intent(this, MainActivity.class));
     }
 }
