@@ -30,7 +30,6 @@ public class PostDetails extends AppCompatActivity {
         Intent i = getIntent();
         curArrayPosition = i.getIntExtra("POSITION", 0);
 
-
         db = new ImageDatabaseHelper(this);
 
         cameraInput = (ListView) findViewById(R.id.list);
@@ -41,7 +40,7 @@ public class PostDetails extends AppCompatActivity {
         }
 
         curInputArray.add(cameraInputArray.get(curArrayPosition));
-        imageAdapter = new ImageAdapter(this, R.layout.grid_item, curInputArray);
+        imageAdapter = new ImageAdapter(this, R.layout.post_item, curInputArray);
         cameraInput.setAdapter(imageAdapter);
     }
 

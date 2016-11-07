@@ -17,18 +17,18 @@ import java.util.List;
 public class ImageDatabaseHelper extends SQLiteOpenHelper {
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION = 16;
+    private static final int DATABASE_VERSION = 17;
 
     // Database Name
-    private static final String DATABASE_NAME = "imagedatabase";
+    public static final String DATABASE_NAME = "imagedatabase";
 
     // Contacts table name
-    private static final String TABLE_NAME = "CAMERAINPUTTABLE";
+    public static final String TABLE_NAME = "CAMERAINPUTTABLE";
 
     // Contacts Table Columns names
-    private static final String KEY_ID = "id";
-    private static final String KEY_IMAGE = "image";
-    private static final String KEY_CAPTION = "caption";
+    public static final String KEY_ID = "_id";
+    public static final String KEY_IMAGE = "image";
+    public static final String KEY_CAPTION = "caption";
 
     public ImageDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -67,7 +67,7 @@ public class ImageDatabaseHelper extends SQLiteOpenHelper {
     public boolean deleteCameraInput(int id)
     {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(TABLE_NAME, KEY_ID + "=" + id, null) > 0;
+        return db.delete(TABLE_NAME, "_id=" + id, null) > 0;
     }
 
     // Getting single image

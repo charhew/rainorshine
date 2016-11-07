@@ -41,6 +41,7 @@ public class ImageAdapter extends ArrayAdapter<CameraInput> {
             row = inflater.inflate(layoutResourceId, parent, false);
 
             holder = new ImageHolder();
+            holder.caption = (TextView)row.findViewById(R.id.caption);
             holder.imgIcon = (ImageView)row.findViewById(R.id.imgIcon);
             row.setTag(holder);
         }
@@ -50,6 +51,8 @@ public class ImageAdapter extends ArrayAdapter<CameraInput> {
         }
 
         CameraInput input = data.get(position);
+        holder.caption.setText(input.caption);
+
         byte[] outImage=input.image;
         ByteArrayInputStream imageStream = new ByteArrayInputStream(outImage);
         Bitmap theImage = BitmapFactory.decodeStream(imageStream);
@@ -59,5 +62,6 @@ public class ImageAdapter extends ArrayAdapter<CameraInput> {
     static class ImageHolder
     {
         ImageView imgIcon;
+        TextView caption;
     }
 }

@@ -107,8 +107,7 @@ public class NavBarFragment extends Fragment implements View.OnClickListener {
                     byte imageInByte[] = stream.toByteArray();
 
                     // Inserting Contacts
-                    Log.d("Insert: ", "Inserting ..");
-                    db.addCameraInput(new CameraInput("Android", imageInByte));
+                    db.addCameraInput(new CameraInput("", imageInByte));
                     Intent i = new Intent(getActivity(), CreatePost.class);
                     startActivity(i);
                     getActivity().finish();
