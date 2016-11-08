@@ -42,6 +42,7 @@ public class ImageAdapter extends ArrayAdapter<CameraInput> {
 
             holder = new ImageHolder();
             holder.caption = (TextView)row.findViewById(R.id.caption);
+            holder.weather = (TextView)row.findViewById(R.id.weather);
             holder.imgIcon = (ImageView)row.findViewById(R.id.imgIcon);
             row.setTag(holder);
         }
@@ -52,6 +53,7 @@ public class ImageAdapter extends ArrayAdapter<CameraInput> {
 
         CameraInput input = data.get(position);
         holder.caption.setText(input.caption);
+        holder.weather.setText(input.weatherTemp + "°C, " + input.weatherCondition);
 
         byte[] outImage=input.image;
         ByteArrayInputStream imageStream = new ByteArrayInputStream(outImage);
@@ -63,5 +65,6 @@ public class ImageAdapter extends ArrayAdapter<CameraInput> {
     {
         ImageView imgIcon;
         TextView caption;
+        TextView weather;
     }
 }

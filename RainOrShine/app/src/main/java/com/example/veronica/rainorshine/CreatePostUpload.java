@@ -84,11 +84,12 @@ public class CreatePostUpload extends Activity {
         }
 
         //convert byte[] to CameraInput
-        CameraInput camInput = new CameraInput("Android", byteImage);
+        CameraInput camInput = new CameraInput(byteImage, "", 0, "");
+
         Toast.makeText(this, "byte converted to CameraInput", Toast.LENGTH_SHORT).show();
 
         //add image to database
-        db.addCameraInput(new CameraInput("Android", byteImage));
+        db.addCameraInput(new CameraInput(byteImage, "", 0, ""));
         Toast.makeText(this, "image added to database", Toast.LENGTH_SHORT).show();
 
         Intent i = new Intent(this, MainActivity.class);

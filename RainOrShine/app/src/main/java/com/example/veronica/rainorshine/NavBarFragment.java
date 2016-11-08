@@ -106,8 +106,8 @@ public class NavBarFragment extends Fragment implements View.OnClickListener {
                     yourImage.compress(Bitmap.CompressFormat.PNG, 100, stream);
                     byte imageInByte[] = stream.toByteArray();
 
-                    // Inserting Contacts
-                    db.addCameraInput(new CameraInput("", imageInByte));
+                    // Inserting camera input
+                    db.addCameraInput(new CameraInput(imageInByte, "caption", 0, "weather condition"));
                     Intent i = new Intent(getActivity(), CreatePost.class);
                     startActivity(i);
                     getActivity().finish();

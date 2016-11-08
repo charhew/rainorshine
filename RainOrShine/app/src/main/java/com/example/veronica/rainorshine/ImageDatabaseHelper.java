@@ -17,7 +17,7 @@ import java.util.List;
 public class ImageDatabaseHelper extends SQLiteOpenHelper {
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION = 17;
+    private static final int DATABASE_VERSION = 18;
 
     // Database Name
     public static final String DATABASE_NAME = "imagedatabase";
@@ -29,6 +29,9 @@ public class ImageDatabaseHelper extends SQLiteOpenHelper {
     public static final String KEY_ID = "_id";
     public static final String KEY_IMAGE = "image";
     public static final String KEY_CAPTION = "caption";
+    public static final String KEY_WEATHER_CONDITION = "weatherCondition";
+    public static final String KEY_WEATHER_TEMP = "weatherTemp";
+
 
     public ImageDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -38,7 +41,7 @@ public class ImageDatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_NAME + "("
                 + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_IMAGE + " BLOB,"
-                + KEY_CAPTION + " TEXT" + ")";
+                + KEY_CAPTION + " TEXT," + KEY_WEATHER_TEMP + " INTEGER," + KEY_WEATHER_CONDITION + " TEXT" + ")";
 
         db.execSQL(CREATE_CONTACTS_TABLE);
     }
@@ -58,6 +61,8 @@ public class ImageDatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(KEY_IMAGE, input.image);
         values.put(KEY_CAPTION, input.caption);
+        values.put(KEY_WEATHER_TEMP, input.weatherTemp);
+        values.put(KEY_WEATHER_CONDITION, input.weatherCondition);
 
         // Inserting Row
         db.insert(TABLE_NAME, null, values);
@@ -74,7 +79,7 @@ public class ImageDatabaseHelper extends SQLiteOpenHelper {
     CameraInput getCameraInput() {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String[] columns = {KEY_ID, KEY_IMAGE, KEY_CAPTION};
+        String[] columns = {KEY_ID, KEY_IMAGE, KEY_CAPTION, KEY_WEATHER_TEMP, KEY_WEATHER_CONDITION};
         Cursor cursor = db.query(TABLE_NAME, columns, null, null, null, null, null);
 
         if(cursor != null) {
@@ -82,7 +87,7 @@ public class ImageDatabaseHelper extends SQLiteOpenHelper {
         }
 
         CameraInput input = new CameraInput(Integer.parseInt(cursor.getString(0)),
-                cursor.getBlob(1), cursor.getString(2));
+                cursor.getBlob(1), cursor.getString(2), cursor.getInt(3), cursor.getString(4));
 
         // return contact
         return input;
@@ -103,6 +108,8 @@ public class ImageDatabaseHelper extends SQLiteOpenHelper {
                 input.setID(Integer.parseInt(cursor.getString(0)));
                 input.setImage(cursor.getBlob(1));
                 input.setCaption(cursor.getString(2));
+                input.setWeatherTemp(cursor.getInt(3));
+                input.setWeatherCondition(cursor.getString(4));
 
                 // Adding contact to list
                 inputList.add(input);

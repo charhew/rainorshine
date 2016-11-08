@@ -19,7 +19,8 @@
         </activity>
         <activity android:name=".Register" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".CreatePost" />
+        <activity android:name=".CreatePost"
+                  android:windowSoftInputMode="adjustResize|stateHidden"/>
         <activity android:name=".PostDetails"></activity>
         <activity android:name=".CreatePostUpload">
             <intent-filter>

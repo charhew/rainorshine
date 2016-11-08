@@ -5,17 +5,26 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.NumberPicker;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class CreatePost extends AppCompatActivity {
+public class CreatePost extends AppCompatActivity implements NumberPicker.OnValueChangeListener, Spinner.OnItemSelectedListener {
 
     ListView dataList;
     EditText captionEditText;
-    String caption = "";
+    NumberPicker picker;
+    Spinner spinner;
+
+    String caption;
+    String weatherCondition;
+    int weatherTemp;
 
     ArrayList<CameraInput> imageArry = new ArrayList<CameraInput>();
     ImageAdapter imageAdapter;
@@ -29,15 +38,27 @@ public class CreatePost extends AppCompatActivity {
         setContentView(R.layout.activity_create_post);
         dataList = (ListView) findViewById(R.id.list);
         captionEditText = (EditText) findViewById(R.id.captionEditText);
+        picker = (NumberPicker) findViewById(R.id.picker);
+
+        picker.setOnValueChangedListener(this);
+        picker.setMinValue(0); // you have to set min and max or else it doesn't work
+        picker.setMaxValue(50);
 
         db = new ImageDatabaseHelper(this);
 
         input = db.getCameraInput();
         imageArry.add(input);
 
-        imageAdapter = new ImageAdapter(this, R.layout.grid_item,
+        imageAdapter = new ImageAdapter(this, R.layout.create_post_item,
                 imageArry);
         dataList.setAdapter(imageAdapter);
+
+        spinner = (Spinner) findViewById(R.id.spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.weather_condition_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
     }
 
     public void submitPost(View v) {
@@ -46,10 +67,27 @@ public class CreatePost extends AppCompatActivity {
 
         ContentValues cv = new ContentValues();
         cv.put("caption", caption);
+        cv.put("weatherTemp", weatherTemp);
+        cv.put("weatherCondition", weatherCondition);
 
         db.getWritableDatabase().update("CAMERAINPUTTABLE", cv, "_id=" + id, null);
 
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
+    }
+
+    @Override
+    public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+        weatherTemp = picker.getValue();
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        weatherCondition = parent.getItemAtPosition(position).toString();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }
