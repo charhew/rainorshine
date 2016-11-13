@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,8 +36,11 @@ public class HomeFragment extends Fragment implements WeatherServiceCallback {
     TextView helloName;
     String firstName;
 
+    public String currentWeather = "Cloudy";
+
     GridView dataGrid;
     public ArrayList<CameraInput> cameraInputArray = new ArrayList<CameraInput>();
+    public ArrayList<CameraInput> queryInputArray = new ArrayList<CameraInput>();
     ImageAdapter imageAdapter;
 
     ImageDatabaseHelper db;
@@ -69,9 +73,12 @@ public class HomeFragment extends Fragment implements WeatherServiceCallback {
 
         db = new ImageDatabaseHelper(getActivity());
 
-        List<CameraInput> inputs = db.getAllCameraInputs();
+       // Toast.makeText(getActivity(), db.getSelectedData(currentWeather), Toast.LENGTH_LONG).show();
+
+
+        List<CameraInput> inputs = db.getAllCameraInputs2(currentWeather);
         for (CameraInput ci : inputs) {
-            cameraInputArray.add(ci);
+                cameraInputArray.add(ci);
         }
 
         imageAdapter = new ImageAdapter(getActivity(), R.layout.grid_item, cameraInputArray);
@@ -92,6 +99,8 @@ public class HomeFragment extends Fragment implements WeatherServiceCallback {
     public void serviceSuccess(Channel channel) {
         Item item = channel.getItem();
 
+        currentWeather = item.getCondition().getDescription();
+
         Toast.makeText(getActivity(), item.getCondition().getDescription(), Toast.LENGTH_SHORT).show();
 
         weatherDetail.setText(" | "+ ((item.getCondition().getTemperature() - 32) * 5/9)+"°C");
@@ -110,7 +119,7 @@ public class HomeFragment extends Fragment implements WeatherServiceCallback {
                 item.getCondition().getDescription().equals("Rain") ||
                 item.getCondition().getDescription().equals("Mixed Rain And Hail") ||
                 item.getCondition().getDescription().equals("Thundershowers")){
-
+            currentWeather = "Rain";
             banner.setImageResource(R.drawable.rain);
             icon.setImageResource(R.drawable.rain_icon);
         }
@@ -122,9 +131,18 @@ public class HomeFragment extends Fragment implements WeatherServiceCallback {
                 item.getCondition().getDescription().equals("Haze") ||
                 item.getCondition().getDescription().equals("Mostly Clear") ||
                 item.getCondition().getDescription().equals("Clear")) {
-
+            currentWeather = "Sunny";
             banner.setImageResource(R.drawable.sunny);
             icon.setImageResource(R.drawable.sunny_icon);
+
+        }
+
+        //clear
+        if (item.getCondition().getDescription().equals("Mostly Clear") ||
+                item.getCondition().getDescription().equals("Clear")) {
+            currentWeather = "Clear";
+//            banner.setImageResource(R.drawable.clear);
+//            icon.setImageResource(R.drawable.clear_icon);
 
         }
 
@@ -141,7 +159,7 @@ public class HomeFragment extends Fragment implements WeatherServiceCallback {
                 item.getCondition().getDescription().equals("Heavy Snow") ||
                 item.getCondition().getDescription().equals("Scattered Snow Showers") ||
                 item.getCondition().getDescription().equals("Snow Showers")) {
-
+            currentWeather = "Snow";
             banner.setImageResource(R.drawable.snow);
             icon.setImageResource(R.drawable.snow_icon);
 
@@ -157,7 +175,7 @@ public class HomeFragment extends Fragment implements WeatherServiceCallback {
                 item.getCondition().getDescription().equals("Partly Cloudy (Night)") ||
                 item.getCondition().getDescription().equals("Partly Cloudy") ||
                 item.getCondition().getDescription().equals("Cloud") ) {
-
+            currentWeather = "Cloudy";
             banner.setImageResource(R.drawable.cloudy);
             icon.setImageResource(R.drawable.cloudy_icon);
 

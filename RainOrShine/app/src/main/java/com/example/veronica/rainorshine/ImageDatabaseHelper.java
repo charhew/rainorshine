@@ -17,13 +17,14 @@ import java.util.List;
 public class ImageDatabaseHelper extends SQLiteOpenHelper {
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION = 18;
+    private static final int DATABASE_VERSION = 19;
 
     // Database Name
     public static final String DATABASE_NAME = "imagedatabase";
 
     // Contacts table name
     public static final String TABLE_NAME = "CAMERAINPUTTABLE";
+
 
     // Contacts Table Columns names
     public static final String KEY_ID = "_id";
@@ -119,5 +120,88 @@ public class ImageDatabaseHelper extends SQLiteOpenHelper {
         db.close();
         // return contact list
         return inputList;
+    }
+
+    public List<CameraInput> getAllCameraInputs2(String type) {
+        List<CameraInput> inputList = new ArrayList<CameraInput>();
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        String[] columns = {KEY_ID, KEY_IMAGE, KEY_CAPTION, KEY_WEATHER_TEMP, KEY_WEATHER_CONDITION};
+
+        String selection = KEY_WEATHER_CONDITION + "='" +type+"'";
+        Cursor cursor = db.query(TABLE_NAME, columns, selection, null, null, null, null);
+
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                CameraInput input = new CameraInput();
+                input.setID(Integer.parseInt(cursor.getString(0)));
+                input.setImage(cursor.getBlob(1));
+                input.setCaption(cursor.getString(2));
+                input.setWeatherTemp(cursor.getInt(3));
+                input.setWeatherCondition(cursor.getString(4));
+
+                // Adding contact to list
+                inputList.add(input);
+            } while (cursor.moveToNext());
+        }
+        // close inserting data from database
+        db.close();
+        // return contact list
+        return inputList;
+    }
+
+    public Cursor getData() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String[] columns = {KEY_ID, KEY_IMAGE, KEY_CAPTION, KEY_WEATHER_TEMP, KEY_WEATHER_CONDITION};
+        Cursor cursor = db.query(TABLE_NAME, columns, null, null, null, null, null);
+        return cursor;
+    }
+
+    public String getSelectedData (String type) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String[] columns = {KEY_ID, KEY_IMAGE, KEY_CAPTION, KEY_WEATHER_TEMP, KEY_WEATHER_CONDITION};
+
+        String selection = KEY_WEATHER_CONDITION + "='" +type+"'";
+        Cursor cursor = db.query(TABLE_NAME, columns, selection, null, null, null, null);
+        StringBuffer buffer = new StringBuffer();
+
+        while(cursor.moveToNext()) {
+            int index = cursor.getColumnIndex(KEY_ID);
+            int index1 = cursor.getColumnIndex(KEY_IMAGE);
+            int index2 = cursor.getColumnIndex(KEY_CAPTION);
+            int index3 = cursor.getColumnIndex(KEY_WEATHER_CONDITION);
+            int index4 = cursor.getColumnIndex(KEY_WEATHER_TEMP);
+            String id = cursor.getString(index);
+            String image = cursor.getString(index1);
+            String caption = cursor.getString(index2);
+            String weatherCondition = cursor.getString(index3);
+            String weatherTemp = cursor.getString(index4);
+
+            buffer.append(id + " " + image + " " + caption + " " + weatherCondition + " " + weatherTemp + "\n");
+        }
+        return buffer.toString();
+    }
+
+    public String getSelectedData2 (String type) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String[] columns = {KEY_ID, KEY_IMAGE, KEY_CAPTION, KEY_WEATHER_TEMP, KEY_WEATHER_CONDITION};
+
+        String selection = KEY_WEATHER_CONDITION + "='" +type+"'";
+        Cursor cursor = db.query(TABLE_NAME, columns, selection, null, null, null, null);
+        StringBuffer buffer = new StringBuffer();
+
+
+
+        while(cursor.moveToNext()) {
+            int index3 = cursor.getColumnIndex(KEY_WEATHER_CONDITION);
+            int index4 = cursor.getColumnIndex(KEY_WEATHER_TEMP);
+            String weatherCondition = cursor.getString(index3);
+            String weatherTemp = cursor.getString(index4);
+
+            buffer.append(weatherCondition + " " + weatherTemp + "\n");
+        }
+        return buffer.toString();
     }
 }
