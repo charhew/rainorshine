@@ -28,7 +28,8 @@ public class PostDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_details);
         Intent i = getIntent();
-        curArrayPosition = i.getIntExtra("POSITION", 0);
+        curArrayPosition = (int) i.getLongExtra("ID", 0) - 1; // subtract by one cuz accounting for how array index starts at 0
+//        Toast.makeText(this, "Current array pos: " + curArrayPosition, Toast.LENGTH_SHORT).show();
 
         db = new ImageDatabaseHelper(this);
 

@@ -61,6 +61,13 @@ public class ImageAdapter extends ArrayAdapter<CameraInput> {
         holder.imgIcon.setImageBitmap(theImage);
         return row;
     }
+
+    // overriding this method actually lets us easily access the actual ID of the CameraInput object
+    @Override
+    public long getItemId(int position) {
+        return getItem(position).getID();
+    }
+
     static class ImageHolder
     {
         ImageView imgIcon;
