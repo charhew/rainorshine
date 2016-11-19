@@ -17,7 +17,7 @@ import java.util.List;
 public class ImageDatabaseHelper extends SQLiteOpenHelper {
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION = 19;
+    private static final int DATABASE_VERSION = 21;
 
     // Database Name
     public static final String DATABASE_NAME = "imagedatabase";
@@ -95,6 +95,7 @@ public class ImageDatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    //USE THIS ONE IF YOU WANT TO SHOW ALL ON THE GRID
     public List<CameraInput> getAllCameraInputs() {
         List<CameraInput> inputList = new ArrayList<CameraInput>();
         // Select All Query
@@ -122,6 +123,7 @@ public class ImageDatabaseHelper extends SQLiteOpenHelper {
         return inputList;
     }
 
+    //USE THIS ONE IF YOU ONLY WANT TO FILTER BY WEATHER CONDITION
     public List<CameraInput> getAllCameraInputs2(String type) {
         List<CameraInput> inputList = new ArrayList<CameraInput>();
 
@@ -131,6 +133,37 @@ public class ImageDatabaseHelper extends SQLiteOpenHelper {
         String selection = KEY_WEATHER_CONDITION + "='" +type+"'";
         Cursor cursor = db.query(TABLE_NAME, columns, selection, null, null, null, null);
 
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                CameraInput input = new CameraInput();
+                input.setID(Integer.parseInt(cursor.getString(0)));
+                input.setImage(cursor.getBlob(1));
+                input.setCaption(cursor.getString(2));
+                input.setWeatherTemp(cursor.getInt(3));
+                input.setWeatherCondition(cursor.getString(4));
+
+                // Adding contact to list
+                inputList.add(input);
+            } while (cursor.moveToNext());
+        }
+        // close inserting data from database
+        db.close();
+        // return contact list
+        return inputList;
+    }
+
+    //USE THIS ONE IF YOU WANT TO FILTER BY WEATHER CONDITION AND (TEMPERATURE +- 5)
+    public List<CameraInput> getAllCameraInputs3(String type, String min, String max) {
+        List<CameraInput> inputList = new ArrayList<CameraInput>();
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        String[] selectionArgs = {min, max, type};
+        String[] columns = {KEY_ID, KEY_IMAGE, KEY_CAPTION, KEY_WEATHER_TEMP, KEY_WEATHER_CONDITION};
+
+        String selection = KEY_WEATHER_TEMP + " >= ? AND " + KEY_WEATHER_TEMP + " <= ? AND " +KEY_WEATHER_CONDITION + " = ?";
+        Cursor cursor = db.query(TABLE_NAME, columns, selection, selectionArgs, null, null, null);
 
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {

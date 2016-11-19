@@ -13,9 +13,14 @@ import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.veronica.rainorshine.data.Channel;
+import com.example.veronica.rainorshine.data.Item;
+import com.example.veronica.rainorshine.service.WeatherServiceCallback;
+import com.example.veronica.rainorshine.service.YahooWeatherService;
+
 import java.util.ArrayList;
 
-public class CreatePost extends AppCompatActivity implements NumberPicker.OnValueChangeListener, Spinner.OnItemSelectedListener {
+public class CreatePost extends AppCompatActivity implements NumberPicker.OnValueChangeListener, Spinner.OnItemSelectedListener, WeatherServiceCallback {
 
     ListView dataList;
     EditText captionEditText;
@@ -25,12 +30,15 @@ public class CreatePost extends AppCompatActivity implements NumberPicker.OnValu
     String caption;
     String weatherCondition;
     int weatherTemp;
+    int currentWeatherTemp;
 
     ArrayList<CameraInput> imageArry = new ArrayList<CameraInput>();
     ImageAdapter imageAdapter;
     CameraInput input;
 
     ImageDatabaseHelper db;
+
+    private YahooWeatherService service;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +47,9 @@ public class CreatePost extends AppCompatActivity implements NumberPicker.OnValu
         dataList = (ListView) findViewById(R.id.list);
         captionEditText = (EditText) findViewById(R.id.captionEditText);
         picker = (NumberPicker) findViewById(R.id.picker);
+
+        service = new YahooWeatherService(this);
+        service.refreshWeather("Vancouver, BC");
 
         picker.setOnValueChangedListener(this);
         picker.setMinValue(0); // you have to set min and max or else it doesn't work
@@ -67,7 +78,7 @@ public class CreatePost extends AppCompatActivity implements NumberPicker.OnValu
 
         ContentValues cv = new ContentValues();
         cv.put("caption", caption);
-        cv.put("weatherTemp", weatherTemp);
+        cv.put("weatherTemp", picker.getValue());
         cv.put("weatherCondition", weatherCondition);
 
         db.getWritableDatabase().update("CAMERAINPUTTABLE", cv, "_id=" + id, null);
@@ -88,6 +99,20 @@ public class CreatePost extends AppCompatActivity implements NumberPicker.OnValu
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
+    @Override
+    public void serviceSuccess(Channel channel) {
+
+        Item item = channel.getItem();
+        currentWeatherTemp = (item.getCondition().getTemperature() - 32) * 5/9;
+        picker.setValue(currentWeatherTemp);
+
+    }
+
+    @Override
+    public void serviceFailure(Exception exception) {
 
     }
 }

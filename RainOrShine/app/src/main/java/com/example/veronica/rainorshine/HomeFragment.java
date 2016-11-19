@@ -36,7 +36,8 @@ public class HomeFragment extends Fragment implements WeatherServiceCallback {
     TextView helloName;
     String firstName;
 
-    public String currentWeather = "Cloudy";
+    public String currentWeather;
+    public String currentWeatherCategory;
 
     GridView dataGrid;
     public ArrayList<CameraInput> cameraInputArray = new ArrayList<CameraInput>();
@@ -69,30 +70,27 @@ public class HomeFragment extends Fragment implements WeatherServiceCallback {
         helloName = (TextView) getActivity().findViewById(R.id.helloTextView);
         helloName.setText("Hello,\n" + firstName + ".");
 
-        dataGrid = (GridView) getActivity().findViewById(R.id.gridview);
-
-        db = new ImageDatabaseHelper(getActivity());
-
-       // Toast.makeText(getActivity(), db.getSelectedData(currentWeather), Toast.LENGTH_LONG).show();
-
-
-        List<CameraInput> inputs = db.getAllCameraInputs2(currentWeather);
-        for (CameraInput ci : inputs) {
-                cameraInputArray.add(ci);
-        }
-
-        imageAdapter = new ImageAdapter(getActivity(), R.layout.grid_item, cameraInputArray);
-        dataGrid.setAdapter(imageAdapter);
-
-        dataGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i = new Intent(getActivity(), PostDetails.class);
-                i.putExtra("POSITION", position);
-                startActivity(i);
-            }
-        });
+//        dataGrid = (GridView) getActivity().findViewById(R.id.gridview);
+//
+//        db = new ImageDatabaseHelper(getActivity());
+//
+//        List<CameraInput> inputs = db.getAllCameraInputs();
+//        for (CameraInput ci : inputs) {
+//                cameraInputArray.add(ci);
+//        }
+//
+//        imageAdapter = new ImageAdapter(getActivity(), R.layout.grid_item, cameraInputArray);
+//        dataGrid.setAdapter(imageAdapter);
+//
+//        dataGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Intent i = new Intent(getActivity(), PostDetails.class);
+//                i.putExtra("POSITION", position);
+//                startActivity(i);
+//            }
+//        });
     }
 
     @Override
@@ -100,6 +98,10 @@ public class HomeFragment extends Fragment implements WeatherServiceCallback {
         Item item = channel.getItem();
 
         currentWeather = item.getCondition().getDescription();
+
+        int currentTemp = (item.getCondition().getTemperature() - 32) * 5/9;
+        String currentTempMin = Integer.toString(currentTemp - 5);
+        String currentTempMax = Integer.toString(currentTemp + 5);
 
         Toast.makeText(getActivity(), item.getCondition().getDescription(), Toast.LENGTH_SHORT).show();
 
@@ -119,7 +121,8 @@ public class HomeFragment extends Fragment implements WeatherServiceCallback {
                 item.getCondition().getDescription().equals("Rain") ||
                 item.getCondition().getDescription().equals("Mixed Rain And Hail") ||
                 item.getCondition().getDescription().equals("Thundershowers")){
-            currentWeather = "Rain";
+            currentWeatherCategory = "Rain";
+            Toast.makeText(getActivity(), currentWeatherCategory, Toast.LENGTH_LONG).show();
             banner.setImageResource(R.drawable.rain);
             icon.setImageResource(R.drawable.rain_icon);
         }
@@ -131,7 +134,7 @@ public class HomeFragment extends Fragment implements WeatherServiceCallback {
                 item.getCondition().getDescription().equals("Haze") ||
                 item.getCondition().getDescription().equals("Mostly Clear") ||
                 item.getCondition().getDescription().equals("Clear")) {
-            currentWeather = "Sunny";
+            currentWeatherCategory = "Sunny";
             banner.setImageResource(R.drawable.sunny);
             icon.setImageResource(R.drawable.sunny_icon);
 
@@ -140,7 +143,7 @@ public class HomeFragment extends Fragment implements WeatherServiceCallback {
         //clear
         if (item.getCondition().getDescription().equals("Mostly Clear") ||
                 item.getCondition().getDescription().equals("Clear")) {
-            currentWeather = "Clear";
+            currentWeatherCategory = "Clear";
 //            banner.setImageResource(R.drawable.clear);
 //            icon.setImageResource(R.drawable.clear_icon);
 
@@ -159,7 +162,7 @@ public class HomeFragment extends Fragment implements WeatherServiceCallback {
                 item.getCondition().getDescription().equals("Heavy Snow") ||
                 item.getCondition().getDescription().equals("Scattered Snow Showers") ||
                 item.getCondition().getDescription().equals("Snow Showers")) {
-            currentWeather = "Snow";
+            currentWeatherCategory = "Snow";
             banner.setImageResource(R.drawable.snow);
             icon.setImageResource(R.drawable.snow_icon);
 
@@ -175,11 +178,33 @@ public class HomeFragment extends Fragment implements WeatherServiceCallback {
                 item.getCondition().getDescription().equals("Partly Cloudy (Night)") ||
                 item.getCondition().getDescription().equals("Partly Cloudy") ||
                 item.getCondition().getDescription().equals("Cloud") ) {
-            currentWeather = "Cloudy";
+            currentWeatherCategory = "Cloudy";
             banner.setImageResource(R.drawable.cloudy);
             icon.setImageResource(R.drawable.cloudy_icon);
 
         }
+
+        dataGrid = (GridView) getActivity().findViewById(R.id.gridview);
+
+        db = new ImageDatabaseHelper(getActivity());
+
+        List<CameraInput> inputs = db.getAllCameraInputs3(currentWeatherCategory, currentTempMin, currentTempMax);
+        for (CameraInput ci : inputs) {
+            cameraInputArray.add(ci);
+        }
+
+        imageAdapter = new ImageAdapter(getActivity(), R.layout.grid_item, cameraInputArray);
+        dataGrid.setAdapter(imageAdapter);
+
+        dataGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i = new Intent(getActivity(), PostDetails.class);
+                i.putExtra("POSITION", position);
+                startActivity(i);
+            }
+        });
 
     }
 
