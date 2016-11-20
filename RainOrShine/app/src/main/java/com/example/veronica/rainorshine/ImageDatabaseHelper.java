@@ -17,7 +17,7 @@ import java.util.List;
 public class ImageDatabaseHelper extends SQLiteOpenHelper {
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION = 21;
+    private static final int DATABASE_VERSION = 29;
 
     // Database Name
     public static final String DATABASE_NAME = "imagedatabase";

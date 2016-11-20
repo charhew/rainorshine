@@ -6,8 +6,11 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -16,11 +19,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by Charlene on 2016-10-27.
@@ -29,6 +37,8 @@ public class NavBarFragment extends Fragment implements View.OnClickListener {
 
     ImageButton homeBtn, cameraBtn, uploadBtn;
     Communicate comm;
+
+    public static final int GET_FROM_GALLERY = 3;
 
     private static final int CAMERA_REQUEST = 1;
 
@@ -71,6 +81,7 @@ public class NavBarFragment extends Fragment implements View.OnClickListener {
 
         cameraBtn = (ImageButton) view.findViewById(R.id.tab_camera);
 
+        // what happens when you tap the CAMERA BUTTON
         cameraBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 dialog.show();
@@ -86,13 +97,51 @@ public class NavBarFragment extends Fragment implements View.OnClickListener {
         homeBtn = (ImageButton) getActivity().findViewById(R.id.tab_home);
         uploadBtn = (ImageButton) getActivity().findViewById(R.id.tab_upload);
 
+
+        // what happens when you tap the UPLOAD BUTTON
+        uploadBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "upload btn clicked", Toast.LENGTH_SHORT).show();
+                startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
+                Toast.makeText(getActivity(), "gallery intent started", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         comm = (Communicate) getActivity();
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode != Activity.RESULT_OK)
-            return;
+
+        if(requestCode==GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
+            Uri selectedImage = data.getData();
+            Bitmap uploadBitmap = null;
+            try {
+                uploadBitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImage);
+                Toast.makeText(getActivity(), "bitmap instantiated", Toast.LENGTH_SHORT).show();
+
+                // convert bitmap to byte
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                uploadBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                byte imageInByte[] = stream.toByteArray();
+
+                // Inserting camera input
+                db.addCameraInput(new CameraInput(imageInByte, "caption", 0, "weather condition"));
+                Intent i = new Intent(getActivity(), CreatePost.class);
+                startActivity(i);
+                getActivity().finish();
+            } catch (FileNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+
+
+        else if (resultCode != RESULT_OK)
+        return;
 
         switch (requestCode) {
             case CAMERA_REQUEST:

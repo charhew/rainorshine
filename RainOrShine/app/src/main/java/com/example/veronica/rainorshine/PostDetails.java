@@ -40,6 +40,8 @@ public class PostDetails extends AppCompatActivity {
             cameraInputArray.add(ci);
         }
 
+        Toast.makeText(this, "curr array pos: " + curArrayPosition, Toast.LENGTH_SHORT).show();
+
         curInputArray.add(cameraInputArray.get(curArrayPosition));
         imageAdapter = new ImageAdapter(this, R.layout.post_item, curInputArray);
         cameraInput.setAdapter(imageAdapter);
