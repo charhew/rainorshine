@@ -17,6 +17,7 @@
         android:orientation="vertical"
         android:paddingLeft="16dp"
         android:paddingRight="16dp">
+
         <TextView
             android:id="@+id/caption"
             android:layout_width="wrap_content"

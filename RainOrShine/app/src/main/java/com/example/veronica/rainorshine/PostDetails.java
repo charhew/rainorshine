@@ -21,15 +21,12 @@ public class PostDetails extends AppCompatActivity {
 
     ListView cameraInput;
 
-    int arrayCounter = 5;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_details);
         Intent i = getIntent();
         curArrayPosition = (int) i.getLongExtra("ID", 0) - 1; // subtract by one cuz accounting for how array index starts at 0
-//        Toast.makeText(this, "Current array pos: " + curArrayPosition, Toast.LENGTH_SHORT).show();
 
         db = new ImageDatabaseHelper(this);
 
@@ -45,15 +42,5 @@ public class PostDetails extends AppCompatActivity {
         curInputArray.add(cameraInputArray.get(curArrayPosition));
         imageAdapter = new ImageAdapter(this, R.layout.post_item, curInputArray);
         cameraInput.setAdapter(imageAdapter);
-    }
-
-    public void delete(View v) {
-        Toast.makeText(this, "Delete Photo Requested", Toast.LENGTH_LONG).show();
-
-
-        //CODE BELOW IS WHAT CALLS THE DELETE METHOD AND DELETES THE IMAGE IN THE POSITION CALLED
-        db.deleteCameraInput(arrayCounter);
-
-        startActivity(new Intent(this, MainActivity.class));
     }
 }

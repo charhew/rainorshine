@@ -11,19 +11,25 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Login">
+        <activity android:name=".Login"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Register" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".Register"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".CreatePost"
+            android:screenOrientation="portrait"
                   android:windowSoftInputMode="adjustResize|stateHidden"/>
-        <activity android:name=".PostDetails"></activity>
-        <activity android:name=".CreatePostUpload">
+        <activity android:name=".PostDetails"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".CreatePostUpload"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.SEND"/>
                 <category android:name="android.intent.category.DEFAULT"/>

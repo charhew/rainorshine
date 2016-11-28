@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 public class Register extends AppCompatActivity {
 
-//    ContactDatabaseHelper helper = new ContactDatabaseHelper(this);
     Button registerButton;
     EditText nameEditText, emailEditText, passwordEditText, password2EditText;
 

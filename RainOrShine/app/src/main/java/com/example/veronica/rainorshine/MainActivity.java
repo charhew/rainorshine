@@ -6,7 +6,7 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 
 
-public class MainActivity extends Activity implements Communicate {
+public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,13 +28,5 @@ public class MainActivity extends Activity implements Communicate {
         } else {
             //do nothing
         }
-
-
-    }
-
-    @Override
-    public void transmit(String message) {
-        FragmentManager manager = getFragmentManager();
-//        HomeFragment frag = (HomeFragment) manager.findFragmentById(R.id.
     }
 }

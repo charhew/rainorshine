@@ -202,7 +202,6 @@ public class HomeFragment extends Fragment implements WeatherServiceCallback {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i = new Intent(getActivity(), PostDetails.class);
                 i.putExtra("ID", id);
-//                Toast.makeText(getActivity(), "ID: " + id, Toast.LENGTH_SHORT).show();
                 startActivity(i);
             }
         });

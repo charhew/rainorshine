@@ -33,10 +33,9 @@ import static android.app.Activity.RESULT_OK;
 /**
  * Created by Charlene on 2016-10-27.
  */
-public class NavBarFragment extends Fragment implements View.OnClickListener {
+public class NavBarFragment extends Fragment {
 
     ImageButton homeBtn, cameraBtn, uploadBtn;
-    Communicate comm;
 
     public static final int GET_FROM_GALLERY = 3;
 
@@ -107,7 +106,6 @@ public class NavBarFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-        comm = (Communicate) getActivity();
     }
 
     @Override
@@ -177,8 +175,4 @@ public class NavBarFragment extends Fragment implements View.OnClickListener {
         intent.putExtra("outputY", 200);
     }
 
-    @Override
-    public void onClick(View v) {
-        comm.transmit("hello world");
-    }
 }
