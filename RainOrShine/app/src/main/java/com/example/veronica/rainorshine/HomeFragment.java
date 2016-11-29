@@ -70,27 +70,6 @@ public class HomeFragment extends Fragment implements WeatherServiceCallback {
         helloName = (TextView) getActivity().findViewById(R.id.helloTextView);
         helloName.setText("Hello,\n" + firstName + ".");
 
-//        dataGrid = (GridView) getActivity().findViewById(R.id.gridview);
-//
-//        db = new ImageDatabaseHelper(getActivity());
-//
-//        List<CameraInput> inputs = db.getAllCameraInputs();
-//        for (CameraInput ci : inputs) {
-//                cameraInputArray.add(ci);
-//        }
-//
-//        imageAdapter = new ImageAdapter(getActivity(), R.layout.grid_item, cameraInputArray);
-//        dataGrid.setAdapter(imageAdapter);
-//
-//        dataGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Intent i = new Intent(getActivity(), PostDetails.class);
-//                i.putExtra("POSITION", position);
-//                startActivity(i);
-//            }
-//        });
     }
 
     @Override
