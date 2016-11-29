@@ -103,7 +103,6 @@ public class HomeFragment extends Fragment implements WeatherServiceCallback {
         String currentTempMin = Integer.toString(currentTemp - 5);
         String currentTempMax = Integer.toString(currentTemp + 5);
 
-        Toast.makeText(getActivity(), item.getCondition().getDescription(), Toast.LENGTH_SHORT).show();
 
         weatherDetail.setText(" | "+ ((item.getCondition().getTemperature() - 32) * 5/9)+"°C");
         displayText.setText("Your fashion grid currently displays outfits suitable for " + ((item.getCondition().getTemperature() - 32) * 5/9)+"°C, " + item.getCondition().getDescription() + ".");
@@ -122,7 +121,6 @@ public class HomeFragment extends Fragment implements WeatherServiceCallback {
                 item.getCondition().getDescription().equals("Mixed Rain And Hail") ||
                 item.getCondition().getDescription().equals("Thundershowers")){
             currentWeatherCategory = "Rain";
-            Toast.makeText(getActivity(), currentWeatherCategory, Toast.LENGTH_LONG).show();
             banner.setImageResource(R.drawable.rain);
             icon.setImageResource(R.drawable.rain_icon);
         }
@@ -144,8 +142,8 @@ public class HomeFragment extends Fragment implements WeatherServiceCallback {
         if (item.getCondition().getDescription().equals("Mostly Clear") ||
                 item.getCondition().getDescription().equals("Clear")) {
             currentWeatherCategory = "Clear";
-//            banner.setImageResource(R.drawable.clear);
-//            icon.setImageResource(R.drawable.clear_icon);
+            banner.setImageResource(R.drawable.clear);
+            icon.setImageResource(R.drawable.clear_icon);
 
         }
 

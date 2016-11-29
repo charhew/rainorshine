@@ -109,6 +109,72 @@ public class CreatePost extends AppCompatActivity implements NumberPicker.OnValu
         currentWeatherTemp = (item.getCondition().getTemperature() - 32) * 5/9;
         picker.setValue(currentWeatherTemp);
 
+        //rain
+        if (item.getCondition().getDescription().equals("Severe Thunderstorms") ||
+                item.getCondition().getDescription().equals("Scattered Showers") ||
+                item.getCondition().getDescription().equals("Thunderstorms") ||
+                item.getCondition().getDescription().equals("Mixed Rain And Snow") ||
+                item.getCondition().getDescription().equals("Mixed Rain And Sleet") ||
+                item.getCondition().getDescription().equals("Drizzle") ||
+                item.getCondition().getDescription().equals("Freezing Rain") ||
+                item.getCondition().getDescription().equals("Showers") ||
+                item.getCondition().getDescription().equals("Hail") ||
+                item.getCondition().getDescription().equals("Rain") ||
+                item.getCondition().getDescription().equals("Mixed Rain And Hail") ||
+                item.getCondition().getDescription().equals("Thundershowers")){
+
+            spinner.setSelection(3);
+
+        }
+
+        //sunny
+        if ( item.getCondition().getDescription().equals("Sunny") ||
+                item.getCondition().getDescription().equals("Fair (Day)") ||
+                item.getCondition().getDescription().equals("Hot") ||
+                item.getCondition().getDescription().equals("Haze") ||
+                item.getCondition().getDescription().equals("Mostly Clear") ||
+                item.getCondition().getDescription().equals("Clear")) {
+            spinner.setSelection(0);
+        }
+
+        //clear
+        if (item.getCondition().getDescription().equals("Mostly Clear") ||
+                item.getCondition().getDescription().equals("Clear")) {
+            spinner.setSelection(4);
+
+        }
+
+        //snow
+        if (item.getCondition().getDescription().equals("Mixed Rain And Snow") ||
+                item.getCondition().getDescription().equals("Mixed Rain And Sleet") ||
+                item.getCondition().getDescription().equals("Mixed Snow And Sleet") ||
+                item.getCondition().getDescription().equals("Freezing Drizzle") ||
+                item.getCondition().getDescription().equals("Freezing Rain") ||
+                item.getCondition().getDescription().equals("Snow Flurries") ||
+                item.getCondition().getDescription().equals("Light Snow Showers") ||
+                item.getCondition().getDescription().equals("Snow") ||
+                item.getCondition().getDescription().equals("Sleet") ||
+                item.getCondition().getDescription().equals("Heavy Snow") ||
+                item.getCondition().getDescription().equals("Scattered Snow Showers") ||
+                item.getCondition().getDescription().equals("Snow Showers")) {
+            spinner.setSelection(2);
+
+        }
+
+        //cloudy
+        if (item.getCondition().getDescription().equals("Foggy") ||
+                item.getCondition().getDescription().equals("Cloudy") ||
+                item.getCondition().getDescription().equals("Mostly Cloudy (Night)") ||
+                item.getCondition().getDescription().equals("Mostly Cloudy (Day)") ||
+                item.getCondition().getDescription().equals("Mostly Cloudy") ||
+                item.getCondition().getDescription().equals("Partly Cloudy (Day)") ||
+                item.getCondition().getDescription().equals("Partly Cloudy (Night)") ||
+                item.getCondition().getDescription().equals("Partly Cloudy") ||
+                item.getCondition().getDescription().equals("Cloud") ) {
+            spinner.setSelection(1);
+
+        }
+
     }
 
     @Override
