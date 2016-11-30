@@ -109,7 +109,6 @@ public class CreatePostUpload extends AppCompatActivity implements NumberPicker.
         Bitmap myBitmap = null;
         try {
             myBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
-            Toast.makeText(this, "img converted to bitmap", Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -119,7 +118,6 @@ public class CreatePostUpload extends AppCompatActivity implements NumberPicker.
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             myBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
             byteImage = stream.toByteArray();
-            Toast.makeText(this, "bitmap converted to byte[]", Toast.LENGTH_SHORT).show();
         }
 
 
