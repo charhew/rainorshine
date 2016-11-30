@@ -120,6 +120,7 @@ public class NavBarFragment extends Fragment {
                 uploadBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
                 byte imageInByte[] = stream.toByteArray();
 
+
                 // Inserting camera input
                 db.addCameraInput(new CameraInput(imageInByte, "caption", 0, "weather condition"));
                 Intent i = new Intent(getActivity(), CreatePost.class);

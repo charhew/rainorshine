@@ -127,49 +127,6 @@ public class CreatePostUpload extends AppCompatActivity implements NumberPicker.
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
         this.finish();
-
-
-//        caption = captionEditText.getText().toString();
-//
-//        //convert the uri to a bitmap
-//        Bitmap myBitmap = null;
-//        try {
-//            myBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
-//            Toast.makeText(this, "img converted to bitmap", Toast.LENGTH_SHORT).show();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        //convert bitmap to byte. store it in the global byteImage variable.
-//        if (myBitmap != null) {
-//            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-//            myBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-//            byteImage = stream.toByteArray();
-//            Toast.makeText(this, "bitmap converted to byte[]", Toast.LENGTH_SHORT).show();
-//        }
-//
-//        //convert byte[] to CameraInput
-//        CameraInput camInput = new CameraInput(byteImage, "", 0, "");
-//
-//        Toast.makeText(this, "byte converted to CameraInput", Toast.LENGTH_SHORT).show();
-//
-//        //add image to database
-//        db.addCameraInput(new CameraInput(byteImage, "", 0, ""));
-
-//        int id = input.getID(); // I get the ID of the current row
-//
-//        ContentValues cv = new ContentValues();
-//        cv.put("caption", caption);
-//        cv.put("weatherTemp", picker.getValue());
-//        cv.put("weatherCondition", weatherCondition);
-//
-//        db.getWritableDatabase().update("CAMERAINPUTTABLE", cv, "_id=" + id, null);
-//        Toast.makeText(this, "image added to database", Toast.LENGTH_SHORT).show();
-//
-//        Intent i = new Intent(this, MainActivity.class);
-//        startActivity(i);
-//        this.finish();
-
     }
 
     @Override
@@ -189,10 +146,77 @@ public class CreatePostUpload extends AppCompatActivity implements NumberPicker.
 
     @Override
     public void serviceSuccess(Channel channel) {
-
+        //Set the spinner to the current temperature by default
         Item item = channel.getItem();
         currentWeatherTemp = (item.getCondition().getTemperature() - 32) * 5 / 9;
         picker.setValue(currentWeatherTemp);
+
+        //Set the spinner to the current weather by default
+        //rain
+        if (item.getCondition().getDescription().equals("Severe Thunderstorms") ||
+                item.getCondition().getDescription().equals("Scattered Showers") ||
+                item.getCondition().getDescription().equals("Thunderstorms") ||
+                item.getCondition().getDescription().equals("Mixed Rain And Snow") ||
+                item.getCondition().getDescription().equals("Mixed Rain And Sleet") ||
+                item.getCondition().getDescription().equals("Drizzle") ||
+                item.getCondition().getDescription().equals("Freezing Rain") ||
+                item.getCondition().getDescription().equals("Showers") ||
+                item.getCondition().getDescription().equals("Hail") ||
+                item.getCondition().getDescription().equals("Rain") ||
+                item.getCondition().getDescription().equals("Mixed Rain And Hail") ||
+                item.getCondition().getDescription().equals("Thundershowers")){
+
+            spinner.setSelection(3);
+
+        }
+
+        //sunny
+        if ( item.getCondition().getDescription().equals("Sunny") ||
+                item.getCondition().getDescription().equals("Fair (Day)") ||
+                item.getCondition().getDescription().equals("Hot") ||
+                item.getCondition().getDescription().equals("Haze") ||
+                item.getCondition().getDescription().equals("Mostly Clear") ||
+                item.getCondition().getDescription().equals("Clear")) {
+            spinner.setSelection(0);
+        }
+
+        //clear
+        if (item.getCondition().getDescription().equals("Mostly Clear") ||
+                item.getCondition().getDescription().equals("Clear")) {
+            spinner.setSelection(4);
+
+        }
+
+        //snow
+        if (item.getCondition().getDescription().equals("Mixed Rain And Snow") ||
+                item.getCondition().getDescription().equals("Mixed Rain And Sleet") ||
+                item.getCondition().getDescription().equals("Mixed Snow And Sleet") ||
+                item.getCondition().getDescription().equals("Freezing Drizzle") ||
+                item.getCondition().getDescription().equals("Freezing Rain") ||
+                item.getCondition().getDescription().equals("Snow Flurries") ||
+                item.getCondition().getDescription().equals("Light Snow Showers") ||
+                item.getCondition().getDescription().equals("Snow") ||
+                item.getCondition().getDescription().equals("Sleet") ||
+                item.getCondition().getDescription().equals("Heavy Snow") ||
+                item.getCondition().getDescription().equals("Scattered Snow Showers") ||
+                item.getCondition().getDescription().equals("Snow Showers")) {
+            spinner.setSelection(2);
+
+        }
+
+        //cloudy
+        if (item.getCondition().getDescription().equals("Foggy") ||
+                item.getCondition().getDescription().equals("Cloudy") ||
+                item.getCondition().getDescription().equals("Mostly Cloudy (Night)") ||
+                item.getCondition().getDescription().equals("Mostly Cloudy (Day)") ||
+                item.getCondition().getDescription().equals("Mostly Cloudy") ||
+                item.getCondition().getDescription().equals("Partly Cloudy (Day)") ||
+                item.getCondition().getDescription().equals("Partly Cloudy (Night)") ||
+                item.getCondition().getDescription().equals("Partly Cloudy") ||
+                item.getCondition().getDescription().equals("Cloud") ) {
+            spinner.setSelection(1);
+
+        }
 
     }
 

@@ -104,11 +104,12 @@ public class CreatePost extends AppCompatActivity implements NumberPicker.OnValu
 
     @Override
     public void serviceSuccess(Channel channel) {
-
+        //Set the spinner to the current temperature by default
         Item item = channel.getItem();
         currentWeatherTemp = (item.getCondition().getTemperature() - 32) * 5/9;
         picker.setValue(currentWeatherTemp);
 
+        //Set the spinner to the current weather by default
         //rain
         if (item.getCondition().getDescription().equals("Severe Thunderstorms") ||
                 item.getCondition().getDescription().equals("Scattered Showers") ||
