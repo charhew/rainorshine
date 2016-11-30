@@ -100,9 +100,7 @@ public class NavBarFragment extends Fragment {
         // what happens when you tap the UPLOAD BUTTON
         uploadBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "upload btn clicked", Toast.LENGTH_SHORT).show();
                 startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
-                Toast.makeText(getActivity(), "gallery intent started", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -116,7 +114,6 @@ public class NavBarFragment extends Fragment {
             Bitmap uploadBitmap = null;
             try {
                 uploadBitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImage);
-                Toast.makeText(getActivity(), "bitmap instantiated", Toast.LENGTH_SHORT).show();
 
                 // convert bitmap to byte
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
