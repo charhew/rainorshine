@@ -36,7 +36,7 @@ public class PostDetails extends AppCompatActivity {
         for (CameraInput ci : inputs) {
             cameraInputArray.add(ci);
         }
-        
+
         curInputArray.add(cameraInputArray.get(curArrayPosition));
         imageAdapter = new ImageAdapter(this, R.layout.post_item, curInputArray);
         cameraInput.setAdapter(imageAdapter);

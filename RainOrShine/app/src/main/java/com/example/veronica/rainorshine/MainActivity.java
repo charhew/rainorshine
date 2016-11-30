@@ -29,4 +29,9 @@ public class MainActivity extends Activity {
             //do nothing
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }
