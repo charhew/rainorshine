@@ -10,7 +10,6 @@
         android:layout_height="wrap_content"
         android:scaleType="fitStart"
         android:id="@+id/weatherBanner"
-        android:src="@drawable/rain"
         android:adjustViewBounds="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
@@ -48,8 +47,7 @@
         android:textSize="24dp"
         android:textColor="@color/colorAccent"
         android:maxLines="10"
-        android:id="@+id/helloTextView"
-        android:text="Hello,\nVeronica."/>
+        android:id="@+id/helloTextView" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -59,8 +57,7 @@
         android:paddingRight="20dp"
         android:paddingLeft="20dp"
         android:textSize="16dp"
-        android:id="@+id/displayTextView"
-        android:text="Your fashion grid currently displays outfits suitable for 5°C, Rain."/>
+        android:id="@+id/displayTextView"/>
 
     <GridView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/gridview"
